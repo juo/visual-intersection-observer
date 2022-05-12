@@ -94,20 +94,20 @@ function parseRootMargin(rootMargin: string): string {
 type VisualIntersectionObserverInit = {
     [K in keyof IntersectionObserverInit]:
         K extends 'root' ?
-        (IntersectionObserverInit[K]|VisualViewport) :
+        never :
         IntersectionObserverInit[K];
 }
 
 export class VisualIntersectionObserver implements IntersectionObserver {
     #cb: IntersectionObserverCallback;
-    #options?: VisualIntersectionObserverInit;
+    #options: VisualIntersectionObserverInit;
     #ob: IntersectionObserver;
 
     #targets = new Set<Element>();
 
     constructor(cb: IntersectionObserverCallback, options?: VisualIntersectionObserverInit) {
         this.#cb = cb;
-        this.#options = options;
+        this.#options = options || {};
         this.#ob = this.#createObserver();
 
         // TODO: optimize
@@ -116,16 +116,12 @@ export class VisualIntersectionObserver implements IntersectionObserver {
     }
 
     #createObserver(): IntersectionObserver {
-        const options = this.#options == null ? {} : { ...this.#options };
-
-        if (options.root instanceof VisualViewport) {
-            options.rootMargin = parseRootMargin(
-                options.rootMargin == null ? '0' : options.rootMargin,
-            );
-            delete options.root;
-        }
-
-        return new IntersectionObserver(this.#cb, options as IntersectionObserverInit);
+        return new IntersectionObserver(this.#cb, {
+            ...this.#options,
+            rootMargin: parseRootMargin(
+                this.#options.rootMargin == null ? '0' : this.#options.rootMargin,
+            ),
+        });
     }
 
     #updateViewport(): void {
