@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0" />
+    <title>Visual Intersection Observer - Demo</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #legend {
+        z-index: 998;
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        display: flex;
+        justify-items: center;
+        padding: 4px 12px;
+        transform: translateX(-50%);
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+        border-radius: 0 0 6px 6px;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      #legend > p {
+        margin: 0 10px;
+      }
+      @media (max-width: 485px) {
+        #legend {
+          font-size: 8px;
+          flex-direction: column;
+        }
+      }
+
+      #viewports {
+        isolation: isolate;
+      }
+
+      #viewport {
+        position: fixed;
+        outline: solid 2px rgb(0, 180, 0);
+        background: rgba(0, 180, 0, 0.1);
+        mix-blend-mode: difference;
+        border-radius: 3px;
+      }
+
+      #visual-viewport {
+        position: fixed;
+        background: rgba(0, 37, 220, 0.1);
+        outline: solid 2px rgb(0, 37, 220);
+        mix-blend-mode: screen;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100vw;
+      }
+
+      .grid__item {
+        width: 19vw;
+        height: 19vw;
+        margin: 0.5vw;
+        background: #eee;
+        box-sizing: border-box;
+        border: solid 2px transparent;
+        transition: border-color ease-in-out 600ms;
+        border-radius: 12px;
+      }
+      @media (min-aspect-ratio: 4/3) {
+        .grid__item {
+          width: 9vw;
+          height: 9vw;
+        }
+      }
+
+      .grid__item--in {
+        border-color: rgb(0, 180, 0);
+      }
+      .grid__item--vin {
+        border-color: rgb(0, 37, 220);
+      }
+      .grid__item--in.grid__item--vin {
+        border-color: rgb(0, 180, 220);
+      }
+
+      #intro {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, .8);
+        padding: 25%;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 999;
+        pointer-events: none;
+        transition: opacity ease-in-out 330ms;
+        text-align: center;
+      }
+    </style>
+    <script type="module" crossorigin src="/visual-intersection-observer/assets/index.4f172eb7.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="intro">
+        Pinch-zoom in and out to see the difference in intersections
+      </div>
+      <div id="legend">
+        <p><span style="color: rgb(0, 180, 0)">■</span> viewport</p>
+        <p><span style="color: rgb(0, 37, 220)">■</span> visual viewport</p>
+        <p><span style="color: rgb(0, 180, 220)">■</span> both</p>
+      </div>
+      <div id="viewports">
+        <div id="viewport"></div>
+        <div id="visual-viewport"></div>
+      </div>
+      <div class="grid"></div>
+    </div>
+    
+  </body>
+</html>
