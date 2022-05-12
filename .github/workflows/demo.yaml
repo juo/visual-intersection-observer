@@ -44,7 +44,5 @@ jobs:
 
       - name: Deploy with gh-pages
         run: |
-          git remote set-url origin https://paweltatarczuk:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git remote set-url origin https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}.git
           pnpx -y gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
