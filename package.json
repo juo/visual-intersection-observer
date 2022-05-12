@@ -1,11 +1,20 @@
 {
   "name": "visual-intersection-observer",
-  "private": true,
+  "files": ["dist"],
+  "main": "./dist/visual-intersection-observer.umd.js",
+  "module": "./dist/visual-intersection-observer.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/visual-intersection-observer.es.js",
+      "require": "./dist/visual-intersection-observer.umd.js"
+    }
+  },
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "demo:build": "vite build -c vite.config.demo.js",
+    "demo:preview": "vite preview -c vite.config.demo.js"
   },
   "devDependencies": {
     "typescript": "^4.5.4",
