@@ -1,3 +1,3 @@
 export default {
-    base: '/visual-intersection-observer',
+    base: '/visual-intersection-observer/',
 }
