@@ -32,7 +32,35 @@ function getVisualRect() {
     };
 }
 
-function parseMargins(margin: string): string {
+type ParsedMargin = {
+    type: 'px'|'%',
+    value: number,
+};
+
+type ParsedMargins = [
+    ParsedMargin,
+    ParsedMargin,
+    ParsedMargin,
+    ParsedMargin,
+];
+
+function parseMargin(margin: string): ParsedMargin {
+    let type: 'px'|'%' = 'px';
+    if (margin != '0' || !/px$/.test(margin)) {
+        if (!/%$/.test(margin)) {
+            throw new Error('Only px or % is allowed in rootMargin');
+        }
+
+        type = '%';
+    }
+
+    return {
+        type,
+        value: parseFloat(margin),
+    }
+}
+
+function parseMargins(margin: string): ParsedMargins {
     let [top, right, bottom, left] = margin.split(/\s+/);
 
     if (right == null) {
@@ -47,20 +75,21 @@ function parseMargins(margin: string): string {
         left = right;
     }
 
-    return [top, right, bottom, left].join(' ');
+    return [
+        parseMargin(top),
+        parseMargin(right),
+        parseMargin(bottom),
+        parseMargin(left),
+    ];
 }
 
-function expandRectByRootMargin(rect: Rect, rootMargin: string) {
-    var margins = parseMargins(rootMargin).split(' ').map((margin, index) => {
-        if (/px$/.test(margin)) {
-            return parseFloat(margin);
+function expandRectByRootMargin(rect: Rect, rootMargin: ParsedMargins) {
+    var margins = rootMargin.map(({ type, value }, index) => {
+        if (type === 'px') {
+            return value;
         }
 
-        if (/%$/.test(margin)) {
-            return parseFloat(margin) * (index % 2 ? rect.width : rect.height) / 100;
-        }
-
-        throw new Error('Only px or % is allowed in rootMargin');
+        return value * (index % 2 ? rect.width : rect.height) / 100;
     });
 
     const newRect: Rect = {
@@ -77,7 +106,7 @@ function expandRectByRootMargin(rect: Rect, rootMargin: string) {
     return newRect;
   };
 
-function parseRootMargin(rootMargin: string): string {
+function transformRootMargin(rootMargin: ParsedMargins): string {
     const rect = expandRectByRootMargin(getVisualRect(), rootMargin);
     const rootRect = getRootRect();
 
@@ -102,12 +131,14 @@ export class VisualIntersectionObserver implements IntersectionObserver {
     #cb: IntersectionObserverCallback;
     #options: VisualIntersectionObserverInit;
     #ob: IntersectionObserver;
+    #rootMargin: ParsedMargins;
 
     #targets = new Set<Element>();
 
     constructor(cb: IntersectionObserverCallback, options?: VisualIntersectionObserverInit) {
         this.#cb = cb;
         this.#options = options || {};
+        this.#rootMargin = parseMargins(this.#options.rootMargin || '0');
         this.#ob = this.#createObserver();
 
         // TODO: optimize
@@ -118,9 +149,7 @@ export class VisualIntersectionObserver implements IntersectionObserver {
     #createObserver(): IntersectionObserver {
         return new IntersectionObserver(this.#cb, {
             ...this.#options,
-            rootMargin: parseRootMargin(
-                this.#options.rootMargin == null ? '0' : this.#options.rootMargin,
-            ),
+            rootMargin: transformRootMargin(this.#rootMargin),
         });
     }
 
