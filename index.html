@@ -203,6 +203,8 @@
 
         window.visualViewport.addEventListener('resize', updateVisualViewport);
         window.visualViewport.addEventListener('scroll', updateVisualViewport);
+        // This is necessary as Visual Observer has a delay
+        setInterval(updateVisualViewport, 50);
         updateVisualViewport();
 
         const viewport = document.getElementById('viewport');

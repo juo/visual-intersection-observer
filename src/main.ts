@@ -7,6 +7,14 @@ interface Rect {
     height: number,
 }
 
+function whenIdle(cb: () => void, timeout?: number): void {
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(cb, timeout == null ? {} : { timeout });
+    } else {
+        setTimeout(cb, 1);
+    }
+}
+
 function getRootRect() {
     const html = document.documentElement;
     const body = document.body;
@@ -154,10 +162,12 @@ export class VisualIntersectionObserver implements IntersectionObserver {
     }
 
     #updateViewport(): void {
-        this.#cb(this.#ob.takeRecords(), this);
-        this.#ob.disconnect();
-        this.#ob = this.#createObserver();
-        this.#targets.forEach((target) => this.#ob.observe(target));
+        whenIdle(() => {
+            this.#cb(this.#ob.takeRecords(), this);
+            this.#ob.disconnect();
+            this.#ob = this.#createObserver();
+            this.#targets.forEach((target) => this.#ob.observe(target));
+        }, 50);
     }
 
     get root(): Element | Document | null {
