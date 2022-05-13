@@ -3,6 +3,7 @@
   "files": ["dist"],
   "main": "./dist/visual-intersection-observer.umd.js",
   "module": "./dist/visual-intersection-observer.es.js",
+  "license": "MIT",
   "exports": {
     ".": {
       "import": "./dist/visual-intersection-observer.es.js",
