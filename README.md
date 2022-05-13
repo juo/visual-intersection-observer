@@ -15,3 +15,4 @@ See the [demo](https://juo.github.io/visual-intersection-observer/) to see it in
 ## Known issues
 
 - When document width is larger than the viewport intersection is not computed properly on mobile devices
+- Chrome and Firefox on mobile sometimes report an incorrect width/height of the Visual Viewport
