@@ -1,5 +1,5 @@
 {
-  "name": "visual-intersection-observer",
+  "name": "@juo/visual-intersection-observer",
   "files": ["dist"],
   "main": "./dist/visual-intersection-observer.umd.js",
   "module": "./dist/visual-intersection-observer.es.js",
