@@ -1,6 +1,6 @@
 # Visual Intersection Observer
 
-<img alt="Visual vs Layout Viewport" width="105" height="212" src="resources/visual-layout-viewport.png">
+<img alt="Visual vs Layout Viewport" width="105" height="212" src="resources/visual-layout-viewport.png"/>
 
 ## Problem
 
