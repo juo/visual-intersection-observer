@@ -10,7 +10,7 @@ In other words `IntersectionObserver` works great as long as user does not zoom 
 
 An `Visual Intersection Observer` that acts as a wrapping utility for the `Intersection Observer` that modifies the `rootMargin` appropriately to the `Visual Viewport`.
 
-See the [demo](https://paweltatarczuk.github.io/visual-intersection-observer/) to see it in action.
+See the [demo](https://juo.github.io/visual-intersection-observer/) to see it in action.
 
 ## Known issues
 
