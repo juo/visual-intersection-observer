@@ -4,6 +4,11 @@
   "main": "./dist/visual-intersection-observer.umd.js",
   "module": "./dist/visual-intersection-observer.es.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juo/visual-intersection-observer"
+  },
+  "homepage": "https://juo.github.io/visual-intersection-observer",
   "exports": {
     ".": {
       "import": "./dist/visual-intersection-observer.es.js",
