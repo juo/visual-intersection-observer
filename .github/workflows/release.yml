@@ -1,6 +1,7 @@
 on:
   release:
-    - published
+    types:
+      - published
 
 jobs:
   demo:
