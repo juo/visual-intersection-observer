@@ -54,7 +54,7 @@ type ParsedMargins = [
 
 function parseMargin(margin: string): ParsedMargin {
     let type: 'px'|'%' = 'px';
-    if (margin != '0' || !/px$/.test(margin)) {
+    if (margin != '0' && !/px$/.test(margin)) {
         if (!/%$/.test(margin)) {
             throw new Error('Only px or % is allowed in rootMargin');
         }
