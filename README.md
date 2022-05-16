@@ -1,5 +1,7 @@
 # Visual Intersection Observer
 
+[![npm](https://img.shields.io/npm/v/@juo/visual-intersection-observer)](https://www.npmjs.com/package/@juo/visual-intersection-observer)
+
 <img alt="Visual vs Layout Viewport" src="resources/visual-layout-viewport.png" width="105">
 
 ## Problem
