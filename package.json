@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "prepack": "npm run build",
     "demo:build": "vite build -c vite.config.demo.js",
     "demo:preview": "vite preview -c vite.config.demo.js"
   },
