@@ -21,6 +21,42 @@ Here's the [demo](https://juo.github.io/visual-intersection-observer/) to see it
 | - | - | - |
 | ![Layout Viewport](resources/layout.png) | ![Visual Viewport](resources/visual.png) | ![Both](resources/both.png) |
 
+## Getting started
+
+### Installation
+
+With a package manager:
+
+```
+npm install @juo/visual-intersection-observer
+```
+
+CDN:
+
+```
+<script src="https://unpkg.com/@juo/visual-intersection-observer"></script>
+```
+
+### Usage
+
+`Visual Intersection Observer` works just like the [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) with one caveat: you can't specify `root` option.
+
+```
+# ESM
+import { VisualIntersectionObserver } from '@juo/visual-intersection-observer';
+
+# UMD
+const { VisualIntersectionObserver } = window['visual-intersection-observer'];
+
+// Create an observer that logs entries to the console
+const ob = new VisualIntersectionObserver((entries) => {
+  console.log(entries);
+});
+
+// Observe an element
+ob.observe(document.getElementById('foo'));
+```
+
 ## Known issues
 
 - When the document width is larger than the viewport, the intersection is not computed properly on mobile devices.
